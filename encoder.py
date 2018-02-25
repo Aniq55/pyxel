@@ -1,20 +1,21 @@
 from PIL import Image
 from keygen import *
-from utils import *
+import numpy
+# from utils import *
 import argparse
 import getpass
 
 
+#
+# def automate_swap(arr, a, b):
+#     L = len(a)
+#     for i in range(L):
+#         temp = arr[a[i][0], a[i][1]]
+#         arr[a[i][0], a[i][1]] = arr[b[i][0], b[i][1]]
+#         arr[b[i][0], b[i][1]] = temp
+#
 
-def automate_swap(arr, a, b):
-    L = len(a)
-    for i in range(L):
-        temp = arr[a[i][0], a[i][1]]
-        arr[a[i][0], a[i][1]] = arr[b[i][0], b[i][1]]
-        arr[b[i][0], b[i][1]] = temp
-
-
-def encode(image_path, TUPLE):
+def encode(image_path, pwd):
     extension=image_path.split('.')[-1]
     try:
         im = Image.open(image_path, "r")
@@ -23,26 +24,32 @@ def encode(image_path, TUPLE):
         exit(0)
 
     im = Image.open(image_path, "r")
-    arr = im.load()  # pixel data stored in this 2D array
+    # arr = im.load()  # pixel data stored in this 2D array
+    arr = numpy.array(im)
     (W, H) = im.size
     print(W, H)
+    TUPLE = key_init(pwd, W, H)
     degree= int(0.36*W*H)
 
-    tuple_a= TUPLE
-    tuple_b= TUPLE
+    a= TUPLE
+    b= TUPLE
 
-    for i in range(degree):
-        tuple_a=tuple_b
-        tuple_b= new_tuple(tuple_a)
-        swap(arr, tuple_a, tuple_b)
-
-
-
+    degree =20
+    for j in range(degree):
+        a=b
+        b= next_tuple(a)
+        L = len(a)
+        for i in range(L):
+            temp = arr[a[i][0], a[i][1]]
+            print(b[i][0], b[i][1])
+            arr[a[i][0], a[i][1]] = arr[b[i][0], b[i][1]]
+            arr[b[i][0], b[i][1]] = temp
 
     tokenized= image_path.split('.')
     saved_path= tokenized[0]+'_enc.'+tokenized[1]
     # im.show() #To display the image im
-    im.save(saved_path)
+    output= Image.fromarray(arr, mode='RGB')
+    output.save(saved_path)
     # return (im,arr,saved_path)
 
 
@@ -58,6 +65,6 @@ if __name__=='__main__':
         exit(0)
     # degree = int(input("Enter degree: "))
     pwd = getpass.getpass("Enter password: ")
-    encode(image_path, key_init(pwd))
+    encode(image_path, pwd)
     # (im,arr,saved_path)=encode(image_path, key_init(pwd))
     # efficiency_calc(image_path,im,arr, saved_path)

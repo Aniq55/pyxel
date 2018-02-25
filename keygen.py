@@ -73,8 +73,8 @@ def all_keys(init_tuple, degree):
     return key
 
 # print(xnor(5,100))
-TUPLE= key_init("goodboy", 3840, 2160)
-print(all_keys(TUPLE, 5))
+# TUPLE= key_init("goodboy", 3840, 2160)
+# print(all_keys(TUPLE, 5))
 
 # print(len(TUPLE))
 # print(len(next_tuple(TUPLE)))
