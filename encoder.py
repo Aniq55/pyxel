@@ -34,16 +34,18 @@ def encode(image_path, pwd):
     a= TUPLE
     b= TUPLE
 
-    degree =20
+    # degree =20
     for j in range(degree):
         a=b
         b= next_tuple(a)
         L = len(a)
         for i in range(L):
-            temp = arr[a[i][0], a[i][1]]
-            print(b[i][0], b[i][1])
-            arr[a[i][0], a[i][1]] = arr[b[i][0], b[i][1]]
-            arr[b[i][0], b[i][1]] = temp
+            a1, a2 = a[i][0]%H, a[i][1]%W
+            b1, b2 = b[i][0]%H, b[i][1]%W
+            temp = arr[a1, a2]
+            print(a1,a2,b1,b2)
+            arr[a1, a2] = arr[b1, b2]
+            arr[b1, b2] = temp
 
     tokenized= image_path.split('.')
     saved_path= tokenized[0]+'_enc.'+tokenized[1]
