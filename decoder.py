@@ -30,7 +30,7 @@ def encode(image_path, pwd):
     (W, H) = im.size
     print(W, H)
     TUPLE = key_init(pwd, W, H)
-    degree= int(3*W*H)
+    degree= int(3.5*W*H)
 
     TUPLE_LIST=[]
     TUPLE_LIST.append(TUPLE)
