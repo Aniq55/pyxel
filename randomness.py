@@ -2,7 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from keygen import *
 
-W, H = 600, 400
+N = 500
+W, H = N, N
 TUPLE= key_init("goodboy", W, H)
 
 total = np.zeros(max(W,H))
@@ -24,5 +25,5 @@ for j in range(degree):
         total[b2]= total[b2]+1
         # print(a1,a2,b1,b2)
 
-plt.plot(list(range(600)), total)
+plt.plot(list(range(N)), total)
 plt.show()
