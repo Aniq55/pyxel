@@ -24,21 +24,27 @@ def encode(image_path, pwd):
         exit(0)
 
     # im = Image.open(image_path, "r")
+    arr = cv2.imread(image_path)
     # arr = im.load()  # pixel data stored in this 2D array
     # arr = numpy.array(im)
-    arr = cv2.imread(image_path)
     (W, H) = im.size
     print(W, H)
     TUPLE = key_init(pwd, W, H)
     degree= int(3*W*H)
 
-    a= TUPLE
-    b= TUPLE
-
+    TUPLE_LIST=[]
+    TUPLE_LIST.append(TUPLE)
     # degree =20
+    for i in range(degree):
+        TUPLE_LIST.append(next_tuple(TUPLE_LIST[-1]))
+
+    # N= len(TUPLE_LIST)
+    # print(degree-N)
+
+    TUPLE_LIST= TUPLE_LIST[::-1]
     for j in range(degree):
-        a=b
-        b= next_tuple(a)
+        a=TUPLE_LIST[j][::-1]
+        b=TUPLE_LIST[j+1][::-1]
         L = len(a)
         for i in range(L):
             a1, a2 = a[i][0]%H, a[i][1]%W
@@ -49,12 +55,11 @@ def encode(image_path, pwd):
             arr[b1, b2] = temp
 
     tokenized= image_path.split('.')
-    saved_path= tokenized[0]+'_enc.'+tokenized[1]
+    saved_path= tokenized[0]+'_dec.'+tokenized[1]
     # im.show() #To display the image im
     # output= Image.fromarray(arr, mode='RGB')
-    # output.save(saved_path)
-    # return (im,arr,saved_path)
     cv2.imwrite(saved_path, arr)
+    # return (im,arr,saved_path)
 
 
 if __name__=='__main__':
