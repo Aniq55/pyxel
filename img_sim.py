@@ -3,6 +3,8 @@ import numpy as np
 from skimage import data, img_as_float
 from skimage.measure import compare_ssim as ssim
 
+# Calculation of structural similarity index
+# Needs automation for acquiring results for analysis
 def similarity_index(image1, image2):
     im1 = cv2.imread(image1, 0)
     im2 = cv2.imread(image2, 0)

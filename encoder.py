@@ -4,7 +4,7 @@ from keygen import *
 import numpy
 import argparse
 import getpass
-
+import time
 
 #
 # def automate_swap(arr, a, b):
@@ -15,7 +15,7 @@ import getpass
 #         arr[b[i][0], b[i][1]] = temp
 #
 
-def encode(image_path, pwd):
+def encode(image_path, pwd, init_tuple=None):
     extension=image_path.split('.')[-1]
     try:
         im = Image.open(image_path, "r")
@@ -30,6 +30,8 @@ def encode(image_path, pwd):
     (W, H) = im.size
     print(W, H)
     TUPLE = key_init(pwd, W, H)
+    if init_tuple!=None:
+        TUPLE = init_tuple
     degree= int(3.5*W*H)
 
     a= TUPLE
@@ -49,12 +51,13 @@ def encode(image_path, pwd):
             arr[b1, b2] = temp
 
     tokenized= image_path.split('.')
-    saved_path= tokenized[0]+'_enc.'+tokenized[1]
+    saved_path= tokenized[0]+'_enc_'+str(int(time.time()))+'.'+tokenized[1]
     # im.show() #To display the image im
     # output= Image.fromarray(arr, mode='RGB')
     # output.save(saved_path)
     # return (im,arr,saved_path)
     cv2.imwrite(saved_path, arr)
+    return TUPLE
 
 
 if __name__=='__main__':
@@ -69,6 +72,6 @@ if __name__=='__main__':
         exit(0)
     # degree = int(input("Enter degree: "))
     pwd = getpass.getpass("Enter password: ")
-    encode(image_path, pwd)
+    seed= encode(image_path, pwd)
     # (im,arr,saved_path)=encode(image_path, key_init(pwd))
     # efficiency_calc(image_path,im,arr, saved_path)
