@@ -1,29 +1,24 @@
-from PIL import Image
 import cv2
 from keygen import *
 import numpy
 import argparse
 import getpass
 import time
-#
-# def automate_swap(arr, a, b):
-#     L = len(a)
-#     for i in range(L):
-#         temp = arr[a[i][0], a[i][1]]
-#         arr[a[i][0], a[i][1]] = arr[b[i][0], b[i][1]]
-#         arr[b[i][0], b[i][1]] = temp
-#
+from constants import *
+
 
 def encode(image_path, pwd, init_tuple=None):
     extension=image_path.split('.')[-1]
+    t_start=  time.time()
 
     arr = cv2.imread(image_path)
-    (W, H) = im.size
+    H, W, channels = arr.shape
     print(W, H)
     TUPLE = key_init(pwd, W, H)
     if init_tuple!=None:
         TUPLE = init_tuple
-    degree= int(3.5*W*H)
+
+    degree= int(N*W*H)
 
     a= TUPLE
     b= TUPLE
@@ -45,6 +40,7 @@ def encode(image_path, pwd, init_tuple=None):
     saved_path= tokenized[0]+'_enc.'+tokenized[1]
 
     cv2.imwrite(saved_path, arr)
+    print("Time taken: "+str(time.time()-t_start))
     return TUPLE
 
 

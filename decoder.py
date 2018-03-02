@@ -1,21 +1,23 @@
-from PIL import Image
 import cv2
 from keygen import *
 import numpy
 import argparse
 import getpass
-
+import time
+from constants import *
 
 def decode(image_path, pwd, init_tuple=None):
     extension=image_path.split('.')[-1]
-    arr = cv2.imread(image_path)
+    t_start= time.time()
 
-    (W, H) = im.size
+    arr = cv2.imread(image_path)
+    H, W, channels = arr.shape
     print(W, H)
     TUPLE = key_init(pwd, W, H)
     if init_tuple!=None:
         TUPLE = init_tuple
-    degree= int(3.5*W*H)
+
+    degree= int(N*W*H)
 
     TUPLE_LIST=[]
     TUPLE_LIST.append(TUPLE)
@@ -39,6 +41,7 @@ def decode(image_path, pwd, init_tuple=None):
     tokenized= image_path.split('.')
     saved_path= tokenized[0]+'_dec.'+tokenized[1]
     cv2.imwrite(saved_path, arr)
+    print("Time taken: "+str(time.time()-t_start))
     return TUPLE
 
 if __name__=='__main__':
