@@ -23,7 +23,6 @@ for j in range(degree):
         total[a2]= total[a2]+1
         total[b1]= total[b1]+1
         total[b2]= total[b2]+1
-        # print(a1,a2,b1,b2)
 
 plt.plot(list(range(N)), total)
 plt.show()

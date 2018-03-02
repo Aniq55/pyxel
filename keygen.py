@@ -4,10 +4,6 @@ import binascii
 import math
 
 
-def max_val(ht, wdth):
-    return max(ht, wdth)
-
-
 def key_init(psswd,H,W):
     word = ['{}'.format(bin(int(hashlib.sha256(psswd.encode('utf-8')).hexdigest(), 16)))]
     # print(word)
@@ -24,7 +20,6 @@ def key_init(psswd,H,W):
 
 def xnor(a,b):
     return abs(~(a^b))
-
 
 # Function to generate the next sequence of tuples
 def next_tuple(tuple):

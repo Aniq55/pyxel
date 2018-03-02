@@ -16,4 +16,4 @@ def similarity_index(image1, image2):
     # c= np.corrcoef(f1,f2)
     print(ssim_im)
 
-similarity_index('emma.png', 'emma_enc.png')
+# similarity_index('emma.png', 'emma_enc.png')
