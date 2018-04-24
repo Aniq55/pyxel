@@ -54,5 +54,5 @@ if __name__=='__main__':
     if(image_path is None):
         print ('Please provide the path to image file. Try again.')
         exit(0)
-    pwd = getpass.getpass("Enter password: ")
+    pwd = "bhattacharyya"
     seed= encode(image_path, pwd)
